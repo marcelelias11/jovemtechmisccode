@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Page</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f5e6cc; /* Beige background */
+        transition: background 0.3s ease;
+      }
+      .container {
+        text-align: center;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+      .shape {
+        position: absolute;
+        opacity: 0.3;
+        z-index: -1;
+      }
+      .circle {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+      }
+      .square {
+        background: rgba(0, 0, 0, 0.1);
+      }
+      .triangle {
+        width: 0;
+        height: 0;
+        border-left: 30px solid transparent;
+        border-right: 30px solid transparent;
+        border-bottom: 60px solid rgba(0, 0, 0, 0.1);
+        background: none;
+      }
+      .star {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 20px solid rgba(0, 0, 0, 0.1);
+      }
+      .star:before {
+        content: "";
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 20px solid rgba(0, 0, 0, 0.1);
+      }
+      .pentagram {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 20px 30px 20px;
+        border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+        transform: rotate(35deg);
+      }
+      .pentagram:before {
+        content: "";
+        position: absolute;
+        top: -18px;
+        left: -20px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 20px 30px 20px;
+        border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+        transform: rotate(-70deg);
+      }
+      button {
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background 0.3s ease;
+      }
+      button:hover {
+        background: #0056b3;
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      .modal.show {
+        display: flex;
+        opacity: 1;
+      }
+      .modal-content {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        transform: scale(0.8);
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        opacity: 0;
+      }
+      .modal.show .modal-content {
+        transform: scale(1);
+        opacity: 1;
+      }
+      .modal input {
+        width: 80%;
+        padding: 8px;
+        margin: 10px 0;
+      }
+      .close-btn {
+        margin-top: 10px;
+        padding: 10px;
+        background: red;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Escolha uma opção:</h2>
+      <button id="avg">Média</button>
+      <button id="desafio">Desafio</button>
+      <button id="salario">Salário</button>
+    </div>
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <p id="modal-text"></p>
+        <input type="text" id="modal-input" style="display: none" />
+        <button id="modal-ok">OK</button>
+        <button id="modal-close" class="close-btn">Fechar</button>
+      </div>
+    </div>
+    <script>
+      function createShapes() {
+        for (let i = 0; i < 10; i++) {
+          let shape = document.createElement("div");
+          let shapeType = Math.random();
+          if (shapeType < 0.25) {
+            shape.classList.add("shape", "circle");
+            shape.style.width = Math.random() * 80 + 40 + "px";
+            shape.style.height = shape.style.width;
+          } else if (shapeType < 0.5) {
+            shape.classList.add("shape", "square");
+            shape.style.width = Math.random() * 80 + 40 + "px";
+            shape.style.height = shape.style.width;
+          } else if (shapeType < 0.75) {
+            shape.classList.add("shape", "triangle");
+          } else {
+            shape.classList.add("shape", "star");
+          }
+          shape.style.top = Math.random() * 100 + "vh";
+          shape.style.left = Math.random() * 100 + "vw";
+          document.body.appendChild(shape);
+        }
+      }
+      createShapes();
+    </script>
+    <script>
+      function getId(value) {
+        return document.getElementById(value);
+      }
+
+      function showModal(message, input = false, callback = null) {
+        const modal = getId("modal");
+        const modalText = getId("modal-text");
+        const modalInput = getId("modal-input");
+        const modalOk = getId("modal-ok");
+        const modalClose = getId("modal-close");
+        const modalContent = modal.querySelector(".modal-content");
+
+        modal.classList.add("show");
+        modalContent.style.opacity = "0";
+        setTimeout(() => (modalContent.style.opacity = "1"), 50);
+
+        modalText.textContent = message;
+        modalInput.style.display = input ? "block" : "none";
+        modalInput.value = "";
+        modalInput.focus();
+
+        modalOk.onclick = () => {
+          modal.classList.remove("show");
+          if (callback) callback(input ? modalInput.value : null);
+        };
+        modalClose.onclick = () => modal.classList.remove("show");
+      }
+
+      function media() {
+        let notasArr = [];
+        let i = 0;
+        function askForNote() {
+          if (i < 4) {
+            showModal(`Insira sua ${i + 1}ª nota`, true, (value) => {
+              notasArr.push(Number(value));
+              i++;
+              askForNote();
+            });
+          } else {
+            let notaSum = notasArr.reduce((sum, nota) => sum + nota, 0);
+            showModal(`Sua nota é ${notaSum / notasArr.length}`);
+          }
+        }
+        askForNote();
+      }
+      getId("avg").addEventListener("click", media);
+
+      function desafio() {
+        showModal("Boas Vindas ao nosso site!", false, () => {
+          showModal("Insira seu nome", true, (nome) => {
+            showModal("Insira sua idade", true, (idade) => {
+              if (Number(idade) >= 18) {
+                showModal("Pode tirar a habilitação!");
+              } else {
+                showModal("Ainda não pode tirar a habilitação!");
+              }
+            });
+          });
+        });
+      }
+      getId("desafio").addEventListener("click", desafio);
+
+      function salario() {
+        showModal("Insira seu salário", true, (sal) => {
+          if (Number(sal) < 500) {
+            sal = Number(sal) * 1.15;
+          } else if (Number(sal) <= 1000) {
+            sal = Number(sal) * 1.1;
+          } else {
+            sal = Number(sal) * 1.05;
+          }
+          showModal(`Seu salário agora é: R$${sal}`);
+        });
+      }
+      getId("salario").addEventListener("click", salario);
+    </script>
+  </body>
+</html>
