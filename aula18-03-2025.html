@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="pilha">Pilha</button>
+    <button id="fila">Fila</button>
+    <script>
+        function getHTML(type, value){
+    switch (type){
+        case "id":
+            return document.getElementById(value);
+            break;
+        case "class":
+            return document.getElementsByClassName(value);
+            break;
+        case "query":
+            return document.querySelector(value);
+            break;
+    }
+}
+
+    function pilha(){
+        let pratos = []
+        for (let i = 0; i < 3; i++){
+            pratos.push("prato")
+        }
+        console.log(pratos)
+        for (let i = 0; i < 3; i++){
+            pratos.pop()
+        }
+        console.log(pratos) 
+    }
+
+    getHTML("id", "pilha").addEventListener("click", pilha)
+    function fila(){
+        let filaAtendimento = []
+        for (let i = 0; i < 3; i++){
+            filaAtendimento.push(`cliente${i+1}`)
+        }
+        console.log(filaAtendimento)
+        for (let i = 0; i < 3; i++){
+            filaAtendimento.shift()
+        }
+        console.log(filaAtendimento) 
+    }
+    getHTML("id", "fila").addEventListener("click", fila)
+    </script>
+</body>
+</html>

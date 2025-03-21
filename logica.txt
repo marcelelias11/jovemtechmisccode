@@ -1,0 +1,17 @@
+A = salario > 4000
+B = falta > 10
+C = Não décimo terceiro
+
+A|B|A^B
+0|0|0
+1|0|0
+0|1|0
+1|1|1
+
+A|B|AvB
+0|0|0
+1|0|1
+0|1|1
+1|1|1
+
+A ^ B = 1, C

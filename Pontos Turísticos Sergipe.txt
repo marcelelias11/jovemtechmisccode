@@ -1,0 +1,32 @@
+Canindé de São Francisco
+Lagoa dos Tambaquis
+Igreja do Bairro América
+UFS
+São João de Estância
+Festa dos Caminhoneiros de Itabaiana
+Chegança de Lagarto
+São Pedro de Capela
+Festival de Artes de São Cristóvão
+Cavalgada de Japoatã
+Parque da Vaquejada Lagarto
+
+What (O que)
+Um aplicativo que mostra pontos de interesse no estado de Sergipe
+
+Why (Por que)
+Para mostrar pontos não tão famosos de Sergipe
+
+Who (quem)
+Será feito por Anny Gabrielly, Júlio César, Marcelo e Everaldina
+
+Where (onde)
+Será feito durante as aulas pelo Wordpress
+
+When (quando)
+Será feito durante as aulas
+
+How (como)
+Será feito utilizando Wordpress, implementando banco de dados Airtable e/ou SQL, dependendo da necessidade
+
+How much (quanto)
+Gratuito pra fazer, pode render uma renda de hosteamento e manutenção, além de taxas cobradas dos pontos que incluirmos em nosso aplicativo

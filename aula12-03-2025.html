@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="13">Calcular 13º</button>
+    <button id="advinhar">Advinhação</button>
+    <script>
+        import getHTML from "marcelolib"
+
+        function decimoTerceiro(){
+            let salario = prompt("Insira seu salario");
+            let falta = prompt("Insira suas faltas");
+            if (salario > 4000 || falta == 10){
+                alert("Você não pode receber décimo terceiro");
+            }
+            else {
+                alert(`Seu décimo terceiro é R$${salario*((365-falta)/30)/12}`);
+            }
+        }
+        function numeroMagico(){
+            let bool = 0
+            while (bool === 0){
+                let num = Math.floor(Math.random()*100);
+                let guess = Number(prompt("Adivinhe o número!"));
+                if (guess === num) {
+                    if (num === 69){
+                        alert("Nice")
+                    } else {
+                        alert("Parabéns!")
+                    }
+                    bool = 1;
+                } else {
+                    alert("Errou, otário")
+                }
+            }
+            
+        }
+        getHTML("id","13").addEventListener('click',decimoTerceiro)
+        getHTML("id", "advinhar").addEventListener("click", numeroMagico)
+    </script>
+</body>
+</html>

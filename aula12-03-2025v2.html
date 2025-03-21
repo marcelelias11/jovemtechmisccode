@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora e Advinhação</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333333;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #555555;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .modal-content button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora e Advinhação</h1>
+        <button id="13">Calcular 13º</button>
+        <button id="advinhar">Adivinhar Número</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <!-- Modal for 13º Salário -->
+    <div class="modal" id="modal-13">
+        <div class="modal-content">
+            <h2>Insira os Dados</h2>
+            <input type="number" id="salario" placeholder="Salário">
+            <input type="number" id="faltas" placeholder="Faltas">
+            <button id="calculate-13">Calcular</button>
+        </div>
+    </div>
+
+    <!-- Modal for Advinhação -->
+    <div class="modal" id="modal-advinhar">
+        <div class="modal-content">
+            <h2>Adivinhe o Número</h2>
+            <input type="number" id="guess" placeholder="Digite um número (0-99)">
+            <button id="calculate-guess">Adivinhar</button>
+        </div>
+    </div>
+
+    <script>
+        function getHTML(type, value) {
+            switch (type) {
+                case "id":
+                    return document.getElementById(value);
+                case "class":
+                    return document.getElementsByClassName(value);
+                case "query":
+                    return document.querySelector(value);
+            }
+        }
+
+        // 13º Salário Logic
+        function decimoTerceiro() {
+            const modal = getHTML("id", "modal-13");
+            modal.style.display = "flex";
+        }
+
+        function calculateDecimoTerceiro() {
+            const salario = parseFloat(getHTML("id", "salario").value);
+            const falta = parseFloat(getHTML("id", "faltas").value);
+            const resultElement = getHTML("id", "result");
+            const modal = getHTML("id", "modal-13");
+
+            if (salario > 4000 || falta === 10) {
+                resultElement.textContent = "Você não pode receber décimo terceiro.";
+                resultElement.style.color = "#ff0000";
+            } else {
+                const decimoTerceiro = salario * ((365 - falta) / 30) / 12;
+                resultElement.textContent = `Seu décimo terceiro é R$${decimoTerceiro.toFixed(2)}`;
+                resultElement.style.color = "#007bff";
+            }
+
+            modal.style.display = "none";
+        }
+
+        // Advinhação Logic
+        function numeroMagico() {
+            const modal = getHTML("id", "modal-advinhar");
+            modal.style.display = "flex";
+        }
+
+        function calculateGuess() {
+            const num = Math.floor(Math.random() * 100);
+            const guess = Number(getHTML("id", "guess").value);
+            const resultElement = getHTML("id", "result");
+            const modal = getHTML("id", "modal-advinhar");
+
+            if (guess === num) {
+                if (num === 69) {
+                    resultElement.textContent = "Nice!";
+                } else {
+                    resultElement.textContent = "Parabéns!";
+                }
+                resultElement.style.color = "#007bff";
+            } else {
+                resultElement.textContent = "Errou, otário!";
+                resultElement.style.color = "#ff0000";
+            }
+
+            modal.style.display = "none";
+        }
+
+        // Event Listeners
+        getHTML("id", "13").addEventListener('click', decimoTerceiro);
+        getHTML("id", "calculate-13").addEventListener('click', calculateDecimoTerceiro);
+        getHTML("id", "advinhar").addEventListener('click', numeroMagico);
+        getHTML("id", "calculate-guess").addEventListener('click', calculateGuess);
+
+        // Close Modals on Outside Click
+        window.addEventListener('click', (event) => {
+            const modal13 = getHTML("id", "modal-13");
+            const modalAdvinhar = getHTML("id", "modal-advinhar");
+
+            if (event.target === modal13) {
+                modal13.style.display = "none";
+            }
+            if (event.target === modalAdvinhar) {
+                modalAdvinhar.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>
