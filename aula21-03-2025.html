@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    body{
+        background-color: #a1a1ff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+    }
+    #buttondiv{
+        background-color: aqua;
+        box-shadow: 10px;
+        width: 50%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+    #maindiv{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-top: 0;
+        margin-bottom: 0;
+        justify-content: center;
+        align-items: center;
+    }
+
+    button{
+        background-color: red;
+        border: 2px black solid;
+        color: white;
+        border-radius: 2em;
+        width: 15%;
+        height: auto;
+    }
+    </style>
+</head>
+<body>
+    <div id="maindiv">
+        <a href="https://marcelo-portifolio.vercel.app/">Marcelo Elias</a>
+        <img src="marcianito-alien.gif" alt="marcianito bailando cumbia 100 real no fake">
+        <div id="buttondiv">            
+            <button id="banco">Empréstimo</button>
+            <button id="desconto">Desconto</button>
+            <button id="temp">Temperatura</button>
+    </div>
+</div>
+    <script>
+        function get(type, value){
+            switch (type){
+                case "id":
+                    return document.getElementById(value);
+                    break;
+                case "class":
+                    return document.getElementsByClassName(value);
+                    break;
+                case "query":
+                    return document.querySelector(value);
+                    break;
+            }
+        }
+        function banco() {
+            let idade = Number(prompt("Insira sua idade"));
+            let tempo = Number(prompt("Insira seu tempo de banco em anos"))
+            let salario = Number(prompt("Insira seu salário em R$"))
+            if (idade >= 18 && idade <= 65 && salario >= 2000 || idade >= 60 && tempo >= 5) {
+                alert("Pode receber empréstimo")
+            } else {
+                alert("Não pode receber empréstimo")
+            }
+        }
+        function desconto(){
+            let valor = Number(prompt("Qual foi o valor da compra em R$?"));
+            let vip = confirm("Você é cliente vip?");  
+            const check = valor >= 1000 ? valor = valor*(0.8 -Number(vip)*0.05) : valor >= 500 ? valor = valor*(0.9 -Number(vip)*0.05) : valor = valor;
+            alert(`Você ganho um desconto! O valor final ficou: R$${valor}`)
+        }
+        function termo() {
+            let temp = Number(prompt("Insira a temperatura atual: "))
+
+            if (temp < 5){
+                alert("Muito frio porra")
+            } else if (temp >= 5 && temp < 15){
+                alert("Friozin")
+            } else if (temp >= 15 && temp < 25){
+                alert("D boas")
+            } else if (temp >= 25 && temp < 35){
+                alert("Quentin")
+            } else {
+                alert("Calor do carai")
+            }
+        }
+        
+        get("id","banco").addEventListener("click",banco)
+        get("id", "desconto").addEventListener("click",desconto)
+        get("id", "temp").addEventListener("click", termo)
+    </script>
+</body>
+</html>
